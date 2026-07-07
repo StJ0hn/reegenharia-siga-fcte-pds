@@ -95,17 +95,3 @@ siga-fcte-pds-backend/
    23.0.1
 
 ---
-
-## Principais Funcionalidades Implementadas
-
-- [x] Cadastro, listagem, matrícula e trancamento de alunos (Normais e Especiais)
-- [x] Cadastro de disciplinas e criação de turmas (presenciais e remotas)
-- [x] Matrícula de alunos em turmas, respeitando vagas e pré-requisitos
-- [x] Lançamento de notas e controle de presença
-- [x] Cálculo de média final e verificação de aprovação/reprovação
-- [x] Relatórios de desempenho acadêmico por aluno, turma e disciplina
-- [x] Persistência de dados em arquivos (.txt ou .csv)
-- [x] Tratamento de duplicidade de matrículas
-- [x] Uso de herança, polimorfismo e encapsulamento
-
----
