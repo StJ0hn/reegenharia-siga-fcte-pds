@@ -1,97 +1,42 @@
-Sistema Acadêmico - FCTE
-Descrição do Projeto
+# SIGA-FCTE — Sistema Acadêmico (Reengenharia)
+> Status: Finalizado
+## Contexto
 
-Este projeto teve início como um desafio acadêmico na disciplina de PDS (Projeto Detalhado de Software) na UFC-Campus-Russas. A ideia principal não se baseia em criar algo do zero, mas sim pegar um sistema "legado" (desenvolvido originalmente pelo Pedro Arthur da UnB) e elevar o nível técnico dele através de uma reengenharia completa.
-Equipe (Scrum - UFC Russas)
+Este projeto nasceu como desafio acadêmico na disciplina de PDS (Projeto Detalhado de Software) na UFC — Campus Russas. Em vez de partir do zero, o objetivo foi pegar um sistema legado (originalmente desenvolvido pelo Pedro Arthur, da UnB, com persistência em arquivos `.txt`) e conduzir uma reengenharia completa: migração para banco de dados relacional, nova arquitetura em camadas, e tratamento robusto de erros e segurança.
 
-    Product Owner (PO): Paulo João
-    Scrum Master (SM): John Miguel
-    Developers: Enzo Andrade, Paulo João, John Miguel e Lucas de Souza
+## Minha Contribuição (John Miguel — Scrum Master & Backend Developer)
 
-1. Objetivos de Reengenharia (Backlog)
+- Atuação como Scrum Master, coordenando o time em sprints ágeis
+- Camada de serviço: `AlunoService`, `DisciplinaService`, `TurmaService`, `AvaliacaoService`
+- Lógica de matrícula com regras de negócio (validações, bloqueios de duplicidade)
+- Padrão Observer (`observer/`) para alertas de ausência
+- Tratamento centralizado de exceções (`exceptions/`), incluindo `AlunoNaoEncontradoException`, `MatriculaDuplicadaException`, `TurmaLotadaException`
+- Apresentação técnica sobre o padrão Factory Method, usando `AlunoFactory.java` como estudo de caso
 
-Estes são os objetivos definidos para a evolução do sistema:
+## Stack
 
-    Integridade e Armazenamento: Migração de arquivos '.txt' para Banco de Dados Relacional.
-    Nova Arquitetura: Implementação dos padrões MVC e DAO para isolar as regras de negócio.
-    Segurança de Dados: Tratamento de entradas para evitar ataques de SQL Injection.
+Java 21 · Spring Boot · Spring Data JPA · PostgreSQL · Maven
 
-2. Instruções para Compilação e Execução
-```
-    Compilação:
+## Como rodar (Backend)
 
-    javac -d bin src/*/*.java src/Main.java
-
-    Execução:
-
-    java -cp bin Main
-```
---- 
-
-Estrutura de Pastas:
-```
-siga-fcte-pds-backend/
-├── src/
-│   ├── main/
-│   │   ├── java/br/ufc/fcte/siga/
-│   │   │   ├── controller/               # Endpoints da API (Lucas)
-│   │   │   │   ├── AlunoController.java
-│   │   │   │   ├── AvaliacaoController.java
-│   │   │   │   ├── DisciplinaController.java
-│   │   │   │   └── TurmaController.java
-│   │   │   ├── dao/                      # Interfaces JPA Repository (Paulo)
-│   │   │   │   ├── AlunoDAO.java
-│   │   │   │   ├── DisciplinaDAO.java
-│   │   │   │   ├── FrequenciaDAO.java
-│   │   │   │   ├── MatriculaDAO.java
-│   │   │   │   ├── NotaDAO.java
-│   │   │   │   └── TurmaDAO.java
-│   │   │   ├── exception/                # Tratamento de Erros e Exceções
-│   │   │   │   ├── AlunoNaoEncontradoException.java
-│   │   │   │   ├── DatabaseException.java
-│   │   │   │   ├── MatriculaDuplicadaException.java
-│   │   │   │   ├── TurmaLotadaException.java
-│   │   │   │   └── TurmaNaoEncontradaException.java
-│   │   │   ├── infra/                    # Configurações de Infraestrutura
-│   │   │   │   └── Database.java
-│   │   │   ├── model/                    # Entidades e Mapeamento JPA (Paulo)
-│   │   │   │   ├── factory/              # Padrão Factory (Criação)
-│   │   │   │   │   └── AlunoFactory.java
-│   │   │   │   ├── Aluno.java            # Abstract @Entity
-│   │   │   │   ├── AlunoEspecial.java    # Subclasse @Entity
-│   │   │   │   ├── AlunoNormal.java      # Subclasse @Entity
-│   │   │   │   ├── Disciplina.java       # @Entity
-│   │   │   │   ├── Frequencia.java       # @Entity
-│   │   │   │   ├── Matricula.java        # @Entity
-│   │   │   │   ├── Nota.java             # @Entity
-│   │   │   │   ├── Professor.java        # @Entity
-│   │   │   │   └── Turma.java            # @Entity
-│   │   │   ├── service/                  # Regras de Negócio (John/Enzo)
-│   │   │   │   ├── relatorio/            # Lógica de Relatórios
-│   │   │   │   │   ├── RelatorioPorDisciplina.java
-│   │   │   │   │   ├── RelatorioPorProfessor.java
-│   │   │   │   │   ├── RelatorioPorTurma.java
-│   │   │   │   │   └── RelatorioService.java
-│   │   │   │   ├── AlunoService.java
-│   │   │   │   ├── AvaliacaoService.java
-│   │   │   │   ├── DisciplinaService.java
-│   │   │   │   └── TurmaService.java
-│   │   │   ├── view/                     # Interface de Usuário (Console)
-│   │   │   │   ├── MenuAluno.java
-│   │   │   │   ├── MenuAvaliacao.java
-│   │   │   │   ├── MenuDisciplina.java
-│   │   │   │   └── MenuPrincipal.java
-│   │   │   └── SigaFctePdsBackendApplication.java
-│   │   └── resources/
-│   │       ├── application.properties    # Configuração do PostgreSQL
-│   │       ├── static/
-│   │       └── templates/
-├── pom.xml                               # Dependências Maven (Spring Boot, JPA, Lombok)
-└── .gitignore                            # Exclusões de arquivos temporários e binários
-   
+```bash
+mvn clean install
+mvn spring-boot:run
 ```
 
-3. **Versão do JAVA utilizada:**  
-   23.0.1
+Configuração do banco em `src/main/resources/application.properties`.
 
----
+## Como rodar (Front-end)
+
+O front-end (React + TypeScript + Vite):
+
+```bash
+npm install
+npm run dev
+```
+
+## Equipe (Scrum — UFC Russas)
+
+- **Product Owner:** Paulo João
+- **Scrum Master:** John Miguel
+- **Developers:** Enzo Andrade, Paulo João, John Miguel, Lucas de Souza
